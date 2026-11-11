@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens GAICREAM (diambil dari desain Figma Make).
+ * Pemakaian: bg-strawberry, text-chocolate, bg-vanilla, text-biscuit, dst.
+ */
+@theme {
+  --color-strawberry: #f5b8c9; /* Strawberry Pink */
+  --color-strawberry-dark: #e58fa8;
+  --color-vanilla: #fff1dc; /* Vanilla Cream */
+  --color-biscuit: #a66b4d; /* Biscuit Brown */
+  --color-chocolate: #713f32; /* Chocolate Brown */
+  --color-ink: #512e26;
+  --color-muted: #8a6b62;
+  --color-matcha: #6c8a54;
+  --color-page: #fffaf3;
+  --color-footer: #fff0e2;
+
+  --shadow-soft: 0 16px 45px rgba(113, 63, 50, 0.1);
+}
+
+/* Font dari next/font (lihat src/app/layout.tsx) */
+@theme inline {
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-page);
+    color: var(--color-chocolate);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-strawberry-dark);
+    outline-offset: 2px;
+  }
+}
