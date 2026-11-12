@@ -3,6 +3,7 @@
  * Operasi yang melibatkan aturan bisnis (status pesanan, PO) memakai fungsi
  * database (RPC) supaya tetap aman dan konsisten.
  */
+import { refreshPublicData } from "@/app/actions/revalidate";
 import { createClient } from "@/lib/supabase/client";
 import { createRemoteCollection } from "@/lib/supabase/collection";
 import {
@@ -47,6 +48,7 @@ export const productsStore = createRemoteCollection<Product>({
   orderBy: [{ column: "sort_order" }, { column: "created_at" }],
   fromRow: productFromRow,
   toRow: productToRow,
+  onPersisted: () => void refreshPublicData(),
 });
 
 // Pesanan hanya diubah lewat fungsi database (lihat updateOrderStatus).
@@ -69,6 +71,7 @@ export const settingsStore = createRemoteCollection<StoreSettings>({
   table: "store_settings",
   fromRow: settingsFromRow,
   toRow: settingsToRow,
+  onPersisted: () => void refreshPublicData(),
 });
 
 export const poStore = createRemoteCollection<PoPeriod>({
@@ -78,14 +81,25 @@ export const poStore = createRemoteCollection<PoPeriod>({
   toRow: () => ({}),
 });
 
-/** Mengubah status pesanan. Pembatalan mengembalikan stok dan bersifat final. */
+/**
+ * Mengubah status pesanan. Tampilan diperbarui langsung (optimistic), lalu disimpan ke database.
+ * Jika gagal, status dikembalikan dan error dilempar. Pembatalan mengembalikan stok dan bersifat final.
+ */
 export async function updateOrderStatus(id: string, status: OrderStatus) {
+  const previous = ordersStore.getSnapshot().find((order) => order.id === id)?.status;
+  ordersStore.patch(id, { status });
   const { error } = await createClient().rpc("set_order_status", {
     p_order_id: id,
     p_status: status,
   });
-  if (error) throw new Error(error.message);
-  await Promise.all([ordersStore.refresh(), productsStore.refresh()]);
+  if (error) {
+    if (previous) ordersStore.patch(id, { status: previous });
+    void ordersStore.refresh();
+    throw new Error(error.message);
+  }
+  // pembatalan mengembalikan stok; kuota PO dan stok publik ikut berubah (di latar belakang)
+  if (status === "dibatalkan") void productsStore.refresh();
+  void refreshPublicData();
 }
 
 /** Membuka PO baru. PO yang masih terbuka otomatis ditutup. */
@@ -103,10 +117,12 @@ export async function openPo(input: {
   });
   if (error) throw new Error(error.message);
   await poStore.refresh();
+  void refreshPublicData();
 }
 
 export async function closePo(id: string) {
   const { error } = await createClient().rpc("close_po", { p_id: id });
   if (error) throw new Error(error.message);
   await poStore.refresh();
+  void refreshPublicData();
 }

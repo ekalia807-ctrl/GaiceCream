@@ -31,7 +31,7 @@ export default async function OrderHistoryPage() {
   const orders = (data ?? []).map(orderFromRow);
 
   return (
-    <main className="min-h-[70vh] bg-[#fffaf4] pb-[90px]">
+    <main className="min-h-[70vh] bg-[#ffffff] pb-[90px]">
       <PageHero
         compact
         eyebrow="Riwayat"
@@ -41,7 +41,7 @@ export default async function OrderHistoryPage() {
 
       <div className="mx-auto mt-[45px] flex w-[min(760px,92vw)] flex-col gap-[16px]">
         {orders.length === 0 ? (
-          <div className="rounded-[24px] bg-white p-[32px] text-center shadow-soft">
+          <div className="border border-line bg-white p-[32px] text-center">
             <p className="mb-[18px] text-[13px] text-muted">Belum ada pesanan.</p>
             <ButtonLink href="/pesan">Pesan sekarang</ButtonLink>
           </div>
@@ -51,7 +51,7 @@ export default async function OrderHistoryPage() {
             return (
               <article
                 key={order.id}
-                className="rounded-[24px] bg-white p-[24px] shadow-[0_8px_30px_rgba(113,63,50,.07)] max-[520px]:p-[18px]"
+                className="border border-line bg-white p-[24px] max-[520px]:p-[18px]"
               >
                 <div className="flex flex-wrap items-start justify-between gap-[10px]">
                   <div>
@@ -61,7 +61,7 @@ export default async function OrderHistoryPage() {
                   <StatusBadge status={order.status} />
                 </div>
 
-                <ul className="my-[14px] border-y border-[#f0e1d7] py-[8px]">
+                <ul className="my-[14px] border-y border-[#eeeceb] py-[8px]">
                   {order.items.map((item) => (
                     <li key={`${order.id}-${item.name}`} className="flex justify-between py-[5px] text-[12px]">
                       <span>

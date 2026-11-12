@@ -26,7 +26,7 @@ export function StatCard({
   iconClassName?: string;
 }) {
   return (
-    <article className="relative rounded-[17px] border border-[#eee1d8] bg-white p-[19px]">
+    <article className="relative rounded-[17px] border border-[#eeeceb] bg-white p-[19px]">
       {icon && (
         <div
           className={cn(

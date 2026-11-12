@@ -80,8 +80,8 @@ export function ProductsView() {
         </Button>
       </AdminTitle>
 
-      <div className="mb-[16px] flex flex-wrap justify-between gap-[10px] rounded-[15px] border border-[#eee2da] bg-white p-[12px] max-[520px]:flex-col">
-        <label className="flex w-[260px] items-center gap-[10px] rounded-full border border-[#ead9cf] px-[13px] py-[8px] focus-within:border-strawberry-dark max-[520px]:w-full">
+      <div className="mb-[16px] flex flex-wrap justify-between gap-[10px] rounded-[15px] border border-[#eeeceb] bg-white p-[12px] max-[520px]:flex-col">
+        <label className="flex w-[260px] items-center gap-[10px] rounded-full border border-[#e7e5e4] px-[13px] py-[8px] focus-within:border-strawberry-dark max-[520px]:w-full">
           <Search size={18} strokeWidth={1.8} aria-hidden="true" />
           <input
             type="search"
@@ -118,7 +118,7 @@ export function ProductsView() {
             return (
               <article
                 key={product.id}
-                className="grid grid-cols-[115px_1fr] overflow-hidden rounded-[18px] border border-[#eee2da] bg-white"
+                className="grid grid-cols-[115px_1fr] overflow-hidden rounded-[18px] border border-[#eeeceb] bg-white"
               >
                 {product.image ? (
                   // eslint-disable-next-line @next/next/no-img-element

@@ -16,8 +16,8 @@ import { Panel, PanelTitle } from "../Panel";
 import { adminError, adminInput, adminLabel } from "../styles";
 import { useToast } from "../ToastProvider";
 
-const th = "border-b border-[#eee2da] px-[10px] py-[14px] text-left text-[9px] tracking-[.5px] text-[#a0857c]";
-const td = "border-b border-[#f3e9e3] px-[10px] py-[14px] text-[11px]";
+const th = "border-b border-[#eeeceb] px-[10px] py-[14px] text-left text-[9px] tracking-[.5px] text-[#a8a29e]";
+const td = "border-b border-[#f5f5f4] px-[10px] py-[14px] text-[11px]";
 
 export function PoView() {
   const ready = useAdminReady();
@@ -109,18 +109,18 @@ export function PoView() {
                 {open.quota !== null ? `Kuota ${open.quota} pcs` : "Tanpa batas kuota"}
               </p>
               <div className="my-[18px] grid grid-cols-3 gap-[10px] text-center">
-                <div className="rounded-[12px] bg-[#fff8ed] p-[12px]">
+                <div className="rounded-[12px] bg-[#f7f5f2] p-[12px]">
                   <b className="block font-heading text-[18px]">{openStats.orders}</b>
                   <small className="text-[10px] text-muted">pesanan</small>
                 </div>
-                <div className="rounded-[12px] bg-[#fff8ed] p-[12px]">
+                <div className="rounded-[12px] bg-[#f7f5f2] p-[12px]">
                   <b className="block font-heading text-[18px]">
                     {openStats.units}
                     {open.quota !== null ? ` / ${open.quota}` : ""}
                   </b>
                   <small className="text-[10px] text-muted">pcs terpesan</small>
                 </div>
-                <div className="rounded-[12px] bg-[#fff8ed] p-[12px]">
+                <div className="rounded-[12px] bg-[#f7f5f2] p-[12px]">
                   <b className="block font-heading text-[18px]">{formatIDR(openStats.revenue)}</b>
                   <small className="text-[10px] text-muted">omzet selesai</small>
                 </div>

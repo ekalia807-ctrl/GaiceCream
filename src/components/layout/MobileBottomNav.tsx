@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { cn, isActivePath } from "@/lib/utils";
 
-const itemBase = "flex flex-col items-center gap-[2px] text-[8px]";
-const iconProps = { size: 20, strokeWidth: 1.8, "aria-hidden": true } as const;
+const itemBase = "flex min-w-[56px] flex-col items-center gap-[3px] py-[6px] text-[10px] tracking-[.04em]";
+const iconProps = { size: 20, strokeWidth: 1.5, "aria-hidden": true } as const;
 
 function NavItem({
   href,
@@ -24,7 +24,7 @@ function NavItem({
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={cn(itemBase, active ? "text-strawberry-dark" : "text-[#a48880]")}
+      className={cn(itemBase, active ? "text-chocolate" : "text-[#a8a29e]")}
     >
       {icon}
       <span>{label}</span>
@@ -38,32 +38,26 @@ export function MobileBottomNav({ whatsappUrl }: { whatsappUrl: string }) {
   return (
     <nav
       aria-label="Navigasi bawah"
-      className="fixed inset-x-0 bottom-0 z-[60] hidden h-[70px] items-center justify-around border-t border-[#eadbd1] bg-white pb-[5px] max-[800px]:flex"
+      className="fixed inset-x-0 bottom-0 z-[60] hidden items-center justify-around border-t border-line bg-white pb-[env(safe-area-inset-bottom)] pt-[4px] max-[800px]:flex"
     >
-      <NavItem
-        href="/"
-        active={isActivePath(pathname, "/")}
-        icon={<House {...iconProps} />}
-        label="Home"
-      />
+      <NavItem href="/" active={isActivePath(pathname, "/")} icon={<House {...iconProps} />} label="Home" />
       <NavItem
         href="/katalog"
         active={isActivePath(pathname, "/katalog")}
         icon={<LayoutGrid {...iconProps} />}
         label="Katalog"
       />
-      <Link
+      <NavItem
         href="/pesan"
-        aria-label="Pesan sekarang"
-        className="grid h-[52px] w-[52px] -translate-y-[18px] place-items-center rounded-full bg-chocolate text-white shadow-[0_7px_18px_rgba(113,63,50,.25)]"
-      >
-        <ShoppingBag {...iconProps} />
-      </Link>
+        active={isActivePath(pathname, "/pesan")}
+        icon={<ShoppingBag {...iconProps} />}
+        label="Pesan"
+      />
       <a
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={cn(itemBase, "text-[#a48880]")}
+        className={cn(itemBase, "text-[#a8a29e]")}
       >
         <MessageCircle {...iconProps} />
         <span>Chat</span>

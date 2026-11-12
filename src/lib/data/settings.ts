@@ -1,5 +1,7 @@
 import { siteConfig, type SiteConfig } from "@/config/site";
-import { createClient } from "@/lib/supabase/server";
+import { unstable_cache } from "next/cache";
+import { createPublicClient } from "@/lib/supabase/public";
+import { PUBLIC_DATA_TAG } from "./tags";
 import { formatLocalPhone, toInternationalPhone } from "@/lib/phone";
 
 /**
@@ -8,8 +10,17 @@ import { formatLocalPhone, toInternationalPhone } from "@/lib/phone";
  */
 export async function getSiteSettings(): Promise<SiteConfig> {
   try {
-    const supabase = await createClient();
-    const { data } = await supabase.from("store_settings").select("*").eq("id", "store").maybeSingle();
+    return await loadSiteSettings();
+  } catch {
+    return siteConfig;
+  }
+}
+
+const loadSiteSettings = unstable_cache(
+  async (): Promise<SiteConfig> => {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase.from("store_settings").select("*").eq("id", "store").maybeSingle();
+    if (error) throw new Error(error.message);
     if (!data) return siteConfig;
 
     const whatsappLocal = String(data.whatsapp || siteConfig.whatsapp.local);
@@ -29,7 +40,7 @@ export async function getSiteSettings(): Promise<SiteConfig> {
         tiktok: String(data.tiktok ?? ""),
       },
     };
-  } catch {
-    return siteConfig;
-  }
-}
+  },
+  ["public-site-settings"],
+  { revalidate: 60, tags: [PUBLIC_DATA_TAG] },
+);

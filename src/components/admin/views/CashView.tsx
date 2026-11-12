@@ -99,7 +99,7 @@ export function CashView() {
               onClick={() => setTab(item.value)}
               className={cn(
                 "whitespace-nowrap rounded-full border px-[14px] py-[8px] text-[11px]",
-                tab === item.value ? "border-chocolate bg-chocolate text-white" : "border-[#ead9cf] bg-white text-muted",
+                tab === item.value ? "border-chocolate bg-chocolate text-white" : "border-[#e7e5e4] bg-white text-muted",
               )}
             >
               {item.label}

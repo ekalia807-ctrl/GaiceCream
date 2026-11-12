@@ -16,7 +16,7 @@ export function OrderSummary({
   const totals = orderTotals(lines);
 
   return (
-    <aside className="sticky top-[110px] h-max rounded-[24px] bg-white p-[28px] shadow-[0_8px_30px_rgba(113,63,50,.07)] max-[800px]:static max-[520px]:px-[15px] max-[520px]:py-[20px]">
+    <aside className="sticky top-[110px] h-max border border-line bg-white p-[28px] max-[800px]:static max-[520px]:px-[15px] max-[520px]:py-[20px]">
       <h3 className="my-[4px] text-[18px]">Ringkasan pesanan</h3>
 
       {lines.length === 0 ? (
@@ -30,7 +30,7 @@ export function OrderSummary({
                 alt=""
                 width={58}
                 height={58}
-                className="h-[58px] w-[58px] rounded-[12px] object-cover"
+                className="h-[58px] w-[58px] rounded-[2px] object-cover"
               />
               <div className="flex flex-1 flex-col">
                 <b className="text-[12px]">{product.name}</b>
@@ -42,7 +42,7 @@ export function OrderSummary({
         </ul>
       )}
 
-      <div className="border-y border-[#f0e1d7] py-[15px]">
+      <div className="border-y border-[#eeeceb] py-[15px]">
         <div className="my-[8px] flex justify-between text-[12px]">
           <span className="text-muted">Jumlah item</span>
           <span>{totals.quantity} pcs</span>
@@ -51,7 +51,7 @@ export function OrderSummary({
 
       <div className="my-[20px] flex items-center justify-between text-[15px]">
         <span className="text-muted">Total</span>
-        <b className="font-heading text-[20px]">{formatIDR(totals.price)}</b>
+        <b className="font-heading text-[20px] font-medium">{formatIDR(totals.price)}</b>
       </div>
 
       <Button type="submit" form={formId} full disabled={submitting}>

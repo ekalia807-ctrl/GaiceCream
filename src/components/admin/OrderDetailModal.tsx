@@ -65,7 +65,7 @@ export function OrderDetailModal({
         )}
       </div>
 
-      <ul className="my-[14px] border-y border-[#f0e1d7] py-[8px]">
+      <ul className="my-[14px] border-y border-[#eeeceb] py-[8px]">
         {order.items.map((item) => (
           <li key={item.productId} className="flex justify-between py-[6px] text-[12px]">
             <span>

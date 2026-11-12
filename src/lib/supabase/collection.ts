@@ -13,6 +13,8 @@ export type RemoteCollection<T extends { id: string }> = {
   /** true setelah data pertama selesai dimuat (atau gagal dimuat) */
   isReady: () => boolean;
   refresh: () => Promise<void>;
+  /** ubah data di memori saja (tanpa menyimpan ke database); dipakai untuk update optimistic */
+  patch: (id: string, patch: Partial<T>) => void;
   add: (item: T) => void;
   update: (id: string, patch: Partial<T>) => void;
   remove: (id: string) => void;
@@ -24,6 +26,8 @@ type Options<T> = {
   orderBy?: { column: string; ascending?: boolean }[];
   fromRow: (row: Row) => T;
   toRow: (item: Partial<T>) => Row;
+  /** dipanggil setelah perubahan berhasil disimpan (mis. membersihkan cache halaman publik) */
+  onPersisted?: () => void;
 };
 
 let errorHandler: ((message: string) => void) | null = null;
@@ -49,12 +53,38 @@ export function createRemoteCollection<T extends { id: string }>(
   const listeners = new Set<Listener>();
   let cache: T[] = EMPTY;
   let status: Status = "idle";
+  let running: Promise<void> | null = null;
+  let queued: Promise<void> | null = null;
 
   function emit() {
     listeners.forEach((listener) => listener());
   }
 
-  async function refresh() {
+  function startLoad() {
+    running = load().finally(() => {
+      running = null;
+    });
+    return running;
+  }
+
+  /**
+   * Memuat ulang data. Permintaan beruntun tidak menumpuk: paling banyak satu pemuatan
+   * berjalan dan satu menunggu giliran (supaya hasilnya selalu lebih baru dari permintaan).
+   */
+  function refresh(): Promise<void> {
+    if (!running) return startLoad();
+    if (!queued) {
+      queued = running
+        .catch(() => undefined)
+        .then(() => {
+          queued = null;
+          return startLoad();
+        });
+    }
+    return queued;
+  }
+
+  async function load() {
     const supabase = createClient();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let query: any = supabase.from(options.table).select(options.select ?? "*");
@@ -88,6 +118,7 @@ export function createRemoteCollection<T extends { id: string }>(
     try {
       const { error } = await operation(createClient());
       if (error) throw new Error(error.message);
+      options.onPersisted?.();
     } catch (error) {
       report(error instanceof Error ? `Gagal menyimpan: ${error.message}` : "Gagal menyimpan perubahan");
       await refresh();
@@ -106,6 +137,10 @@ export function createRemoteCollection<T extends { id: string }>(
     getServerSnapshot: () => EMPTY,
     isReady: () => status === "ready" || status === "error",
     refresh,
+    patch(id, patch) {
+      cache = cache.map((item) => (item.id === id ? { ...item, ...patch } : item));
+      emit();
+    },
     add(item) {
       cache = [...cache, item];
       emit();

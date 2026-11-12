@@ -10,8 +10,8 @@ export function PoBanner({
 }) {
   if (po) {
     return (
-      <div className="bg-chocolate px-[16px] py-[8px] text-center text-[12px] text-white">
-        <b>{po.name} dibuka</b>
+      <div className="bg-chocolate px-[16px] py-[8px] text-center text-[11px] tracking-[.04em] text-white">
+        <b className="font-medium">{po.name} dibuka</b>
         {po.readyDate && <> · Ready {formatLongDateString(po.readyDate)}</>}
         {po.remaining !== null && <> · Sisa kuota {po.remaining} pcs</>}
       </div>
@@ -19,10 +19,10 @@ export function PoBanner({
   }
 
   return (
-    <div className="bg-[#eeeae6] px-[16px] py-[8px] text-center text-[12px] text-[#6e625e]">
+    <div className="bg-vanilla px-[16px] py-[8px] text-center text-[11px] tracking-[.04em] text-muted">
       PO sedang ditutup.{" "}
       {instagramUrl ? (
-        <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="font-bold underline">
+        <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="font-medium text-chocolate underline">
           Pantau Instagram
         </a>
       ) : (

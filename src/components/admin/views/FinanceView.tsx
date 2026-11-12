@@ -180,7 +180,7 @@ export function FinanceView() {
             profitRanking.map((item) => (
               <div key={item.key} className="my-[20px] grid grid-cols-[90px_1fr_36px] items-center gap-[8px]">
                 <span className="truncate text-[10px]">{item.name}</span>
-                <div className="h-[7px] rounded-[5px] bg-[#f3e9e3]">
+                <div className="h-[7px] rounded-[5px] bg-[#f5f5f4]">
                   <i
                     className="block h-full rounded-[5px] bg-strawberry-dark"
                     style={{ width: `${maxProfit > 0 ? Math.max(0, (item.profit / maxProfit) * 100) : 0}%` }}

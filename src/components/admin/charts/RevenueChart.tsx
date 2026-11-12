@@ -28,7 +28,7 @@ export function RevenueChart({ data }: { data: SeriesPoint[] }) {
             dataKey="label"
             tickLine={false}
             axisLine={{ stroke: "#e9ddd4" }}
-            tick={{ fontSize: 10, fill: "#8a6b62" }}
+            tick={{ fontSize: 10, fill: "#78716c" }}
             interval="preserveStartEnd"
           />
           <YAxis hide />

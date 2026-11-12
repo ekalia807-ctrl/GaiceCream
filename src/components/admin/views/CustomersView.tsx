@@ -13,8 +13,8 @@ import { AdminLoading, EmptyState } from "../EmptyState";
 import { Panel } from "../Panel";
 import { StatCard, StatGrid } from "../StatCard";
 
-const th = "border-b border-[#eee2da] px-[10px] py-[14px] text-left text-[9px] tracking-[.5px] text-[#a0857c]";
-const td = "border-b border-[#f3e9e3] px-[10px] py-[14px] text-[11px]";
+const th = "border-b border-[#eeeceb] px-[10px] py-[14px] text-left text-[9px] tracking-[.5px] text-[#a8a29e]";
+const td = "border-b border-[#f5f5f4] px-[10px] py-[14px] text-[11px]";
 
 export function CustomersView() {
   const ready = useAdminReady();
@@ -54,8 +54,8 @@ export function CustomersView() {
         />
       </StatGrid>
 
-      <div className="mb-[16px] rounded-[15px] border border-[#eee2da] bg-white p-[12px]">
-        <label className="flex w-[260px] items-center gap-[10px] rounded-full border border-[#ead9cf] px-[13px] py-[8px] focus-within:border-strawberry-dark max-[520px]:w-full">
+      <div className="mb-[16px] rounded-[15px] border border-[#eeeceb] bg-white p-[12px]">
+        <label className="flex w-[260px] items-center gap-[10px] rounded-full border border-[#e7e5e4] px-[13px] py-[8px] focus-within:border-strawberry-dark max-[520px]:w-full">
           <Search size={18} strokeWidth={1.8} aria-hidden="true" />
           <input
             type="search"

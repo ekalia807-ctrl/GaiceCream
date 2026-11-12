@@ -78,7 +78,7 @@ export function LoginForm({ next, initialError }: { next: string; initialError?:
       </Button>
       <p className="mt-[18px] text-center text-[12px] text-muted">
         Belum punya akun?{" "}
-        <Link href={`/daftar?next=${encodeURIComponent(next)}`} className="font-bold text-biscuit">
+        <Link href={`/daftar?next=${encodeURIComponent(next)}`} className="font-medium text-chocolate underline">
           Daftar
         </Link>
       </p>

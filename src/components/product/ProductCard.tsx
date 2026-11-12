@@ -1,11 +1,10 @@
-import { ArrowRight, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { formatIDR } from "@/lib/utils";
 import type { Product } from "@/types/product";
 
 const detailClass =
-  "flex items-center gap-[8px] pt-[9px] text-[11px] font-bold text-biscuit";
+  "border-b border-transparent text-[11px] uppercase tracking-[.14em] text-muted hover:border-chocolate hover:text-chocolate";
 
 export function ProductCard({
   product,
@@ -18,58 +17,57 @@ export function ProductCard({
   /** dipakai di Katalog: membuka modal detail */
   onDetail?: () => void;
 }) {
-  const detailLabel = (
-    <>
-      Lihat detail <ArrowRight size={16} strokeWidth={1.8} aria-hidden="true" />
-    </>
-  );
+  const soldOut = product.stock <= 0;
 
   return (
-    <article className="group overflow-hidden rounded-[25px] bg-white shadow-[0_8px_30px_rgba(113,63,50,.08)] transition-transform duration-300 hover:-translate-y-[6px]">
-      <div className="relative h-[270px] overflow-hidden max-[800px]:h-[220px] max-[520px]:h-[320px]">
+    <article className="flex flex-col">
+      <div className="relative aspect-[4/5] overflow-hidden bg-vanilla">
         <Image
           src={product.image}
           alt={`Gabin es krim ${product.name}`}
           fill
-          sizes="(max-width: 520px) 100vw, (max-width: 800px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          sizes="(max-width: 800px) 50vw, 33vw"
+          className="object-cover"
         />
-        <span className="absolute left-[16px] top-[16px] rounded-full bg-[#fff7ad] px-[10px] py-[7px] text-[9px] font-extrabold uppercase tracking-[.8px] text-[#79520e]">
-          {product.tag}
-        </span>
+        {(product.tag || soldOut) && (
+          <span className="absolute left-[8px] top-[8px] bg-white px-[8px] py-[4px] text-[9px] font-medium uppercase tracking-[.14em] text-chocolate">
+            {soldOut ? "Stok habis" : product.tag}
+          </span>
+        )}
       </div>
 
-      <div className="p-[22px]">
-        <small className="text-[10px] uppercase tracking-[1px] text-biscuit">
-          {product.category}
-        </small>
-        <h3 className="my-[4px] text-[22px]">{product.name}</h3>
-        <p className="min-h-[40px] text-[13px] leading-[1.55] text-muted">
+      <div className="flex flex-1 flex-col pt-[12px]">
+        <small className="text-[10px] uppercase tracking-[.16em] text-muted">{product.category}</small>
+        <h3 className="mt-[3px] text-[17px] font-normal leading-[1.25] max-[520px]:text-[15px]">{product.name}</h3>
+        <p className="mt-[4px] line-clamp-2 min-h-[40px] text-[12px] leading-[1.6] text-muted max-[520px]:hidden">
           {product.description}
         </p>
+        <strong className="mt-[8px] text-[14px] font-medium">{formatIDR(product.price)}</strong>
 
-        <div className="mt-[18px] flex items-center justify-between">
-          <strong className="font-heading text-[19px]">
-            {formatIDR(product.price)}
-          </strong>
-          <Link
-            href={`/pesan?rasa=${product.id}`}
-            aria-label={`Pesan ${product.name}`}
-            className="grid h-[39px] w-[39px] place-items-center rounded-full bg-strawberry text-chocolate"
-          >
-            <Plus size={20} strokeWidth={1.8} aria-hidden="true" />
-          </Link>
+        <div className="mt-[12px] flex items-center justify-between gap-[8px]">
+          {onDetail ? (
+            <button type="button" onClick={onDetail} className={detailClass}>
+              Detail
+            </button>
+          ) : detailHref ? (
+            <Link href={detailHref} className={detailClass}>
+              Detail
+            </Link>
+          ) : (
+            <span />
+          )}
+          {soldOut ? (
+            <span className="text-[11px] uppercase tracking-[.14em] text-[#a8a29e]">Habis</span>
+          ) : (
+            <Link
+              href={`/pesan?rasa=${product.id}`}
+              aria-label={`Pesan ${product.name}`}
+              className="min-h-[40px] border border-chocolate px-[14px] py-[10px] text-[11px] font-medium uppercase tracking-[.14em] hover:bg-chocolate hover:text-white"
+            >
+              Pesan
+            </Link>
+          )}
         </div>
-
-        {onDetail ? (
-          <button type="button" onClick={onDetail} className={detailClass}>
-            {detailLabel}
-          </button>
-        ) : detailHref ? (
-          <Link href={detailHref} className={detailClass}>
-            {detailLabel}
-          </Link>
-        ) : null}
       </div>
     </article>
   );

@@ -26,14 +26,14 @@ export default async function OrderPage({
 
   if (!po) {
     return (
-      <main className="min-h-[70vh] bg-[#fffaf4] pb-[90px]">
+      <main className="min-h-[70vh] bg-[#ffffff] pb-[90px]">
         <PageHero
           compact
           eyebrow="Pre-order"
           title="PO sedang ditutup"
           description="Pemesanan dibuka per periode pre-order. Pantau Instagram kami untuk info PO berikutnya."
         />
-        <div className="mx-auto mt-[45px] flex w-[min(520px,92vw)] flex-col gap-[12px] rounded-[24px] bg-white p-[32px] text-center shadow-soft">
+        <div className="mx-auto mt-[45px] flex w-[min(520px,92vw)] flex-col gap-[12px] border border-line bg-white p-[32px] text-center">
           <p className="text-[13px] leading-[1.7] text-muted">
             Sambil menunggu, kamu bisa melihat pilihan rasa atau bertanya langsung lewat WhatsApp.
           </p>
@@ -66,7 +66,7 @@ export default async function OrderPage({
       : undefined;
 
   return (
-    <main className="min-h-[70vh] bg-[#fffaf4] pb-[90px]">
+    <main className="min-h-[70vh] bg-[#ffffff] pb-[90px]">
       <PageHero
         compact
         eyebrow="Pesan dengan mudah"

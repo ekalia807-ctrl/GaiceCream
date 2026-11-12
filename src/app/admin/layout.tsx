@@ -18,5 +18,5 @@ export default async function AdminLayout({
   if (!user) redirect("/masuk?next=/admin");
   if (user.role !== "admin") redirect("/?akses=ditolak");
 
-  return <AdminShell>{children}</AdminShell>;
+  return <AdminShell userId={user.id}>{children}</AdminShell>;
 }

@@ -60,7 +60,7 @@ export function StockModal({
               "flex-1 rounded-full border px-[10px] py-[9px] text-[12px]",
               mode === item.value
                 ? "border-chocolate bg-chocolate text-white"
-                : "border-[#ead9cf] bg-white text-muted",
+                : "border-[#e7e5e4] bg-white text-muted",
             )}
           >
             {item.label}

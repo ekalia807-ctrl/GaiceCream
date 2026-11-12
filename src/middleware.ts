@@ -10,6 +10,12 @@ function redirectTo(request: NextRequest, path: string, session: NextResponse) {
   return response;
 }
 
+/**
+ * Middleware hanya berjalan di halaman yang butuh sesi login (lihat matcher di bawah).
+ * Halaman publik (Home, Katalog, Tentang) tidak lewat sini, jadi tidak ada panggilan
+ * ke Supabase dan bisa disajikan dari cache. Peran admin dicek di app/admin/layout.tsx
+ * dan dijaga RLS di database.
+ */
 export async function middleware(request: NextRequest) {
   const { response, supabase, user } = await updateSession(request);
   const { pathname, search } = request.nextUrl;
@@ -23,22 +29,9 @@ export async function middleware(request: NextRequest) {
     return redirectTo(request, `/masuk?next=${next}`, response);
   }
 
-  if (supabase && user && (pathname === "/admin" || pathname.startsWith("/admin/"))) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .maybeSingle();
-    if (profile?.role !== "admin") {
-      return redirectTo(request, "/?akses=ditolak", response);
-    }
-  }
-
   return response;
 }
 
 export const config = {
-  matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|icon.png|images/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
-  ],
+  matcher: ["/pesan/:path*", "/riwayat/:path*", "/admin/:path*"],
 };

@@ -12,6 +12,14 @@ Ikuti urutan ini. Semua langkah dilakukan sekali saja.
 3. Buat query baru, salin isi `supabase/seed.sql`, lalu **Run**. Ini mengisi 6 produk awal (cek harga, modal, dan stoknya nanti di dashboard admin).
 4. Jika ada pesan error merah, jangan lanjut: kirim pesan error-nya ke saya.
 
+## 2b. Aktifkan fitur notifikasi
+1. Di **SQL Editor** > **New query**, salin seluruh isi `supabase/migrations/0002_notifications.sql`, tempel, lalu **Run**.
+2. Selesai. Mulai sekarang:
+   - **Admin** menerima notifikasi saat ada pesanan baru.
+   - **Pelanggan** menerima notifikasi saat status pesanannya berubah dan saat PO baru dibuka.
+   - Lonceng ada di header (website) dan di pojok kanan atas (dashboard admin). Klik lonceng, lalu pilih **Aktifkan notifikasi di perangkat ini** agar notifikasi juga muncul saat tab sedang tidak dibuka.
+3. Jika langkah ini belum dijalankan, website tetap normal; lonceng hanya kosong.
+
 ## 3. Isi file `.env.local`
 1. Di Supabase buka **Project Settings** > **API** (atau **API Keys**).
 2. Salin **Project URL** dan **anon key** (atau **publishable key**).

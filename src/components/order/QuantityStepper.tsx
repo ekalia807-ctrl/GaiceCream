@@ -11,10 +11,10 @@ export function QuantityStepper({
   label: string;
   onChange: (next: number) => void;
 }) {
-  const button = "h-[40px] w-[40px] text-[20px] disabled:opacity-40";
+  const button = "h-[44px] w-[44px] text-[20px] disabled:opacity-40";
 
   return (
-    <div className="flex w-[140px] items-center justify-between rounded-full border border-[#ead9cf]">
+    <div className="flex w-[140px] items-center justify-between rounded-[2px] border border-[#d6d3d1]">
       <button
         type="button"
         aria-label={`Kurangi ${label}`}
@@ -24,7 +24,7 @@ export function QuantityStepper({
       >
         −
       </button>
-      <b aria-live="polite">{value}</b>
+      <b aria-live="polite" className="font-medium">{value}</b>
       <button
         type="button"
         aria-label={`Tambah ${label}`}

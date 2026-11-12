@@ -15,16 +15,16 @@ export function PageHero({
   return (
     <section
       className={cn(
-        "bg-vanilla px-[20px] text-center",
-        compact ? "pb-[42px] pt-[55px]" : "pb-[55px] pt-[75px]",
+        "border-b border-line bg-white px-[20px] text-center",
+        compact ? "pb-[32px] pt-[40px]" : "pb-[44px] pt-[56px]",
       )}
     >
       <Eyebrow centered>{eyebrow}</Eyebrow>
-      <h1 className="mb-[10px] text-[clamp(40px,5vw,64px)] tracking-[-2px] max-[520px]:text-[37px]">
+      <h1 className="mb-[10px] text-[clamp(28px,4.2vw,46px)] font-light leading-[1.1] tracking-[-.02em]">
         {title}
       </h1>
       {description && (
-        <p className="mx-auto max-w-[590px] text-muted">{description}</p>
+        <p className="mx-auto max-w-[560px] text-[14px] leading-[1.7] text-muted">{description}</p>
       )}
     </section>
   );

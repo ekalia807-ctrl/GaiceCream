@@ -20,7 +20,7 @@ const FORM_ID = "order-form";
 
 const labelClass = "mt-[16px] flex flex-col gap-[7px] text-[11px] font-bold";
 const inputClass =
-  "rounded-[11px] border border-[#ead9cf] bg-[#fffcf8] p-[12px] text-[12px] font-normal outline-none focus:border-strawberry-dark";
+  "rounded-[2px] border border-[#e7e5e4] bg-[#ffffff] p-[12px] text-[12px] font-normal outline-none focus:border-chocolate";
 const errorClass = "text-[11px] font-medium text-[#b3412f]";
 
 function FormBlock({
@@ -40,10 +40,10 @@ function FormBlock({
     <div
       className={cn(
         "grid grid-cols-[42px_1fr] gap-[15px] pb-[30px] pt-[10px] max-[520px]:grid-cols-[32px_1fr]",
-        last ? "" : "mb-[25px] border-b border-[#f1e3da]",
+        last ? "" : "mb-[25px] border-b border-[#eeeceb]",
       )}
     >
-      <span className="grid h-[32px] w-[32px] place-items-center rounded-full bg-strawberry text-[12px] font-extrabold">
+      <span className="grid h-[32px] w-[32px] place-items-center rounded-full bg-chocolate text-[12px] font-medium text-white">
         {number}
       </span>
       <div>
@@ -174,9 +174,9 @@ export function OrderFlow({
         id={FORM_ID}
         noValidate
         onSubmit={handleSubmit(onValid, onInvalid)}
-        className="rounded-[24px] bg-white p-[28px] shadow-[0_8px_30px_rgba(113,63,50,.07)] max-[520px]:px-[15px] max-[520px]:py-[20px]"
+        className="border border-line bg-white p-[28px] max-[520px]:px-[15px] max-[520px]:py-[20px]"
       >
-        <div className="mb-[25px] rounded-[15px] bg-[#fff8ed] px-[16px] py-[12px] text-[12px]">
+        <div className="mb-[25px] rounded-[2px] bg-[#f7f5f2] px-[16px] py-[12px] text-[12px]">
           <b>{po.name}</b>
           {po.readyDate && <> · Ready {formatLongDateString(po.readyDate)}</>}
           {po.remaining !== null && <> · Sisa kuota {po.remaining} pcs</>}
@@ -200,10 +200,10 @@ export function OrderFlow({
                   aria-pressed={selected}
                   onClick={() => toggleProduct(product)}
                   className={cn(
-                    "relative flex items-center gap-[10px] rounded-[15px] bg-white p-[9px] text-left disabled:opacity-50",
+                    "relative flex min-h-[64px] items-center gap-[10px] rounded-[2px] bg-white p-[9px] text-left disabled:opacity-50",
                     selected
-                      ? "border-2 border-strawberry-dark bg-[#fff7f9]"
-                      : "border border-[#ead9cf]",
+                      ? "border-2 border-chocolate bg-[#faf5f6]"
+                      : "border border-[#e7e5e4]",
                   )}
                 >
                   <Image
@@ -211,7 +211,7 @@ export function OrderFlow({
                     alt=""
                     width={48}
                     height={48}
-                    className="h-[48px] w-[48px] rounded-[10px] object-cover"
+                    className="h-[48px] w-[48px] rounded-[2px] object-cover"
                   />
                   <span className="flex flex-col">
                     <b className="text-[12px]">{product.name}</b>
@@ -220,7 +220,7 @@ export function OrderFlow({
                     </small>
                   </span>
                   {selected && (
-                    <i className="absolute right-[8px] top-[8px] grid h-[18px] w-[18px] place-items-center rounded-full bg-strawberry-dark text-white">
+                    <i className="absolute right-[8px] top-[8px] grid h-[18px] w-[18px] place-items-center rounded-full bg-chocolate text-white">
                       <Check size={12} strokeWidth={3} aria-hidden="true" />
                     </i>
                   )}
@@ -255,7 +255,7 @@ export function OrderFlow({
                       alt=""
                       width={48}
                       height={48}
-                      className="h-[48px] w-[48px] rounded-[10px] object-cover"
+                      className="h-[48px] w-[48px] rounded-[2px] object-cover"
                     />
                     <span className="flex flex-col">
                       <b className="text-[12px]">{product.name}</b>
@@ -326,15 +326,15 @@ export function OrderFlow({
                         setValue("deliveryMethod", method, { shouldValidate: true })
                       }
                       className={cn(
-                        "relative flex-1 rounded-[11px] border p-[13px] text-[12px] font-bold",
+                        "relative min-h-[48px] flex-1 rounded-[2px] border p-[13px] text-[12px] font-medium",
                         selected
-                          ? "border-strawberry-dark bg-[#fff7f9]"
-                          : "border-[#ead9cf] bg-white",
+                          ? "border-chocolate bg-[#faf5f6]"
+                          : "border-[#e7e5e4] bg-white",
                       )}
                     >
                       {deliveryLabels[method]}
                       {selected && (
-                        <i className="absolute right-[8px] top-[8px] grid h-[18px] w-[18px] place-items-center rounded-full bg-strawberry-dark text-white">
+                        <i className="absolute right-[8px] top-[8px] grid h-[18px] w-[18px] place-items-center rounded-full bg-chocolate text-white">
                           <Check size={12} strokeWidth={3} aria-hidden="true" />
                         </i>
                       )}

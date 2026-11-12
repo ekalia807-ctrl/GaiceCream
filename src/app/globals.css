@@ -1,53 +1,92 @@
 @import "tailwindcss";
 
 /*
- * Design tokens GAICREAM (diambil dari desain Figma Make).
- * Pemakaian: bg-strawberry, text-chocolate, bg-vanilla, text-biscuit, dst.
+ * Design tokens GAICREAM — gaya minimalis (putih, hitam hangat, banyak ruang kosong).
+ * Nama token lama (chocolate, vanilla, strawberry, ...) dipertahankan supaya
+ * semua komponen, termasuk dashboard admin, otomatis ikut tampilan baru.
  */
 @theme {
-  --color-strawberry: #f5b8c9; /* Strawberry Pink */
-  --color-strawberry-dark: #e58fa8;
-  --color-vanilla: #fff1dc; /* Vanilla Cream */
-  --color-biscuit: #a66b4d; /* Biscuit Brown */
-  --color-chocolate: #713f32; /* Chocolate Brown */
-  --color-ink: #512e26;
-  --color-muted: #8a6b62;
+  --color-strawberry: #f4e6ea; /* blush lembut (latar aksen) */
+  --color-strawberry-dark: #b4637a; /* aksen (badge, fokus) */
+  --color-vanilla: #f7f5f2; /* latar section */
+  --color-biscuit: #8a7a70; /* teks sekunder/aksen kecil */
+  --color-chocolate: #1c1917; /* teks utama & tombol utama */
+  --color-ink: #1c1917;
+  --color-muted: #78716c;
   --color-matcha: #6c8a54;
-  --color-page: #fffaf3;
-  --color-footer: #fff0e2;
+  --color-page: #ffffff;
+  --color-footer: #f7f5f2;
+  --color-line: #e7e5e4;
 
-  --shadow-soft: 0 16px 45px rgba(113, 63, 50, 0.1);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.04), 0 10px 28px rgba(0, 0, 0, 0.06);
 }
 
-/* Font dari next/font (lihat src/app/layout.tsx) */
+/* Font dari next/font (lihat src/app/layout.tsx): satu keluarga font saja agar ringan */
 @theme inline {
-  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     background: var(--color-page);
     color: var(--color-chocolate);
+    -webkit-tap-highlight-color: transparent;
   }
 
   h1,
   h2,
   h3 {
     font-family: var(--font-heading);
-    font-weight: 600;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  button,
+  a {
+    touch-action: manipulation;
   }
 
   button {
     cursor: pointer;
   }
 
+  /* input minimal 16px di HP agar iOS tidak otomatis memperbesar layar saat mengetik */
+  @media (max-width: 800px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+
   :focus-visible {
-    outline: 2px solid var(--color-strawberry-dark);
+    outline: 2px solid var(--color-chocolate);
     outline-offset: 2px;
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* animasi sederhana untuk skeleton loading */
+@keyframes gai-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+.gai-skeleton {
+  background: #efedeb;
+  animation: gai-pulse 1.4s ease-in-out infinite;
 }

@@ -1,8 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { PUBLIC_DATA_TAG } from "@/lib/data/tags";
 import { orderFormSchema } from "@/lib/validation/order";
 
 const itemsSchema = z
@@ -74,6 +75,8 @@ export async function placeOrderAction(input: PlaceOrderInput): Promise<PlaceOrd
     return { ok: false, message: "Pesanan belum berhasil dibuat. Coba lagi." };
   }
 
+  // stok dan kuota PO berubah: segarkan data publik yang di-cache
+  revalidateTag(PUBLIC_DATA_TAG);
   revalidatePath("/riwayat");
   return { ok: true, orderNumber: String(row.order_number) };
 }

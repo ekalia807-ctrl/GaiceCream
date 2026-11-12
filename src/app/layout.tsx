@@ -1,19 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Nunito } from "next/font/google";
+import { Jost } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const nunito = Nunito({
+const jost = Jost({
   subsets: ["latin"],
-  weight: ["600", "700", "800", "900"],
-  variable: "--font-nunito",
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-dm-sans",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-jost",
   display: "swap",
 });
 
@@ -28,6 +21,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
@@ -36,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${nunito.variable} ${dmSans.variable}`}>
+    <html lang="id" className={jost.variable}>
       <body className="font-sans antialiased">{children}</body>
     </html>
   );

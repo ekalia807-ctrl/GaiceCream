@@ -7,8 +7,8 @@ import { EmptyState } from "./EmptyState";
 import { OrderStatusSelect, StatusBadge } from "./StatusBadge";
 
 const th =
-  "border-b border-[#eee2da] px-[10px] py-[14px] text-left text-[9px] tracking-[.5px] text-[#a0857c]";
-const td = "border-b border-[#f3e9e3] px-[10px] py-[14px] text-[11px]";
+  "border-b border-[#eeeceb] px-[10px] py-[14px] text-left text-[9px] tracking-[.5px] text-[#a8a29e]";
+const td = "border-b border-[#f5f5f4] px-[10px] py-[14px] text-[11px]";
 
 export function OrderTable({
   orders,

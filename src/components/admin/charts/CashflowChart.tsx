@@ -36,14 +36,14 @@ export function CashflowChart({ data }: { data: SeriesPoint[] }) {
             dataKey="label"
             tickLine={false}
             axisLine={{ stroke: "#e9ddd4" }}
-            tick={{ fontSize: 10, fill: "#8a6b62" }}
+            tick={{ fontSize: 10, fill: "#78716c" }}
             interval="preserveStartEnd"
           />
           <YAxis
             width={46}
             tickLine={false}
             axisLine={false}
-            tick={{ fontSize: 10, fill: "#8a6b62" }}
+            tick={{ fontSize: 10, fill: "#78716c" }}
             tickFormatter={(value) => formatCompactIDR(Number(value))}
           />
           <Tooltip formatter={(value) => formatIDR(Number(value))} />

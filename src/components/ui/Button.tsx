@@ -17,17 +17,17 @@ type StyleOptions = {
 };
 
 const base =
-  "inline-flex items-center justify-center gap-[10px] rounded-full font-bold shadow-[0_8px_20px_rgba(113,63,50,.16)] transition-[transform,background-color] duration-[250ms] hover:-translate-y-[2px]";
+  "inline-flex items-center justify-center gap-[10px] rounded-[2px] text-[12px] font-medium uppercase tracking-[.14em] transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  primary: "border-0 bg-chocolate text-white hover:bg-[#592f25]",
-  secondary: "border border-[#e7d2c6] bg-white text-chocolate shadow-none",
-  light: "border-0 bg-white text-chocolate",
+  primary: "border border-chocolate bg-chocolate text-white hover:bg-[#44403c]",
+  secondary: "border border-[#d6d3d1] bg-white text-chocolate hover:border-chocolate",
+  light: "border border-white bg-white text-chocolate hover:bg-[#f5f5f4]",
 };
 
 const sizes: Record<Size, string> = {
-  md: "px-[23px] py-[15px]",
-  sm: "px-[18px] py-[11px] text-[13px]",
+  md: "min-h-[48px] px-[26px] py-[14px]",
+  sm: "min-h-[40px] px-[18px] py-[10px] text-[11px]",
 };
 
 export function buttonStyles({

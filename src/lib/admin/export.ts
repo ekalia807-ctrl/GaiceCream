@@ -38,7 +38,7 @@ const stamp = () => new Date().toISOString().slice(0, 10);
 
 async function loadExcel() {
   const mod = await import("exceljs");
-  const ExcelJS = (mod as { default?: typeof mod }).default ?? mod;
+  const ExcelJS = (mod as unknown as { default?: typeof mod }).default ?? mod;
   const workbook = new ExcelJS.Workbook();
   workbook.creator = "GAICREAM";
   workbook.created = new Date();

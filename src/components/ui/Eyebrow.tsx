@@ -13,7 +13,7 @@ export function Eyebrow({
   return (
     <div
       className={cn(
-        "mb-[18px] flex items-center gap-[9px] text-[11px] font-extrabold uppercase tracking-[2.2px] text-biscuit",
+        "mb-[14px] flex items-center gap-[9px] text-[11px] font-medium uppercase tracking-[.22em] text-muted",
         centered && "justify-center",
         className,
       )}

@@ -1,23 +1,16 @@
+import { Suspense } from "react";
 import { BestSellers } from "@/components/home/BestSellers";
 import { CtaBanner } from "@/components/home/CtaBanner";
 import { FlavorSection } from "@/components/home/FlavorSection";
 import { Hero } from "@/components/home/Hero";
 import { Testimonials } from "@/components/home/Testimonials";
 import { TrustStrip } from "@/components/home/TrustStrip";
-import { getFeaturedProducts, getProducts } from "@/lib/data/products";
+import { AccessNotice } from "@/components/layout/AccessNotice";
+import { getProducts } from "@/lib/data/products";
 import { getTestimonials } from "@/lib/data/testimonials";
 
-export default async function HomePage({
-  searchParams,
-}: {
-  searchParams: Promise<{ akses?: string }>;
-}) {
-  const { akses } = await searchParams;
-  const [products, featured, testimonials] = await Promise.all([
-    getProducts(),
-    getFeaturedProducts(3),
-    getTestimonials(),
-  ]);
+export default async function HomePage() {
+  const [products, testimonials] = await Promise.all([getProducts(), getTestimonials()]);
 
   if (products.length === 0) {
     return (
@@ -31,14 +24,12 @@ export default async function HomePage({
 
   return (
     <main>
-      {akses === "ditolak" && (
-        <p role="alert" className="bg-[#f9e3df] px-[16px] py-[10px] text-center text-[12px] text-[#a8493a]">
-          Akun ini tidak memiliki akses ke dashboard admin.
-        </p>
-      )}
+      <Suspense fallback={null}>
+        <AccessNotice />
+      </Suspense>
       <Hero product={products[0]} minPrice={minPrice} />
       <TrustStrip flavorCount={products.length} />
-      <BestSellers products={featured} />
+      <BestSellers products={products.slice(0, 3)} />
       <FlavorSection products={products.slice(1, 5)} totalFlavors={products.length} />
       <Testimonials items={testimonials} />
       <CtaBanner />

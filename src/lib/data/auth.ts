@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 
 export type SessionUser = {
@@ -9,7 +10,7 @@ export type SessionUser = {
 };
 
 /** Pengguna yang sedang login (null jika belum login). Diverifikasi ke server Supabase. */
-export async function getSessionUser(): Promise<SessionUser | null> {
+export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
   const supabase = await createClient();
   const {
     data: { user },
@@ -29,4 +30,4 @@ export async function getSessionUser(): Promise<SessionUser | null> {
     whatsapp: profile?.whatsapp ?? "",
     role: profile?.role === "admin" ? "admin" : "customer",
   };
-}
+});

@@ -35,7 +35,7 @@ export function OrderSuccess({
 
   return (
     <section className="grid place-items-center bg-vanilla px-[20px] py-[70px]">
-      <div className="w-[min(520px,100%)] rounded-[30px] bg-white p-[45px] text-center shadow-soft max-[520px]:p-[28px]">
+      <div className="w-[min(520px,100%)] border border-line bg-white p-[45px] text-center max-[520px]:p-[28px]">
         <div className="mx-auto mb-[25px] grid h-[75px] w-[75px] place-items-center rounded-full bg-[#dfead8] text-matcha">
           <Check size={36} strokeWidth={2} aria-hidden="true" />
         </div>
@@ -51,7 +51,7 @@ export function OrderSuccess({
           </p>
         )}
 
-        <div className="my-[22px] flex justify-between rounded-[14px] bg-[#fff8ed] p-[14px]">
+        <div className="my-[22px] flex justify-between rounded-[2px] bg-[#f7f5f2] p-[14px]">
           <small className="text-muted">Nomor transaksi</small>
           <b className="font-heading">{order.orderNumber}</b>
         </div>
@@ -64,7 +64,7 @@ export function OrderSuccess({
                 alt=""
                 width={44}
                 height={44}
-                className="h-[44px] w-[44px] rounded-[10px] object-cover"
+                className="h-[44px] w-[44px] rounded-[2px] object-cover"
               />
               <span className="flex-1 text-[12px]">
                 <b>{product.name}</b> × {quantity}
@@ -73,9 +73,9 @@ export function OrderSuccess({
             </li>
           ))}
         </ul>
-        <div className="mb-[22px] flex items-center justify-between border-t border-[#f0e1d7] pt-[14px] text-[15px]">
+        <div className="mb-[22px] flex items-center justify-between border-t border-[#eeeceb] pt-[14px] text-[15px]">
           <span className="text-muted">Total</span>
-          <b className="font-heading text-[20px]">{formatIDR(total)}</b>
+          <b className="font-heading text-[20px] font-medium">{formatIDR(total)}</b>
         </div>
 
         <div className="flex flex-col gap-[10px]">

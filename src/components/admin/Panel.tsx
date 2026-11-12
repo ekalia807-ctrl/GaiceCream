@@ -10,7 +10,7 @@ export function Panel({
 }) {
   return (
     <section
-      className={cn("rounded-[17px] border border-[#eee1d8] bg-white p-[21px]", className)}
+      className={cn("rounded-[17px] border border-[#eeeceb] bg-white p-[21px]", className)}
     >
       {children}
     </section>

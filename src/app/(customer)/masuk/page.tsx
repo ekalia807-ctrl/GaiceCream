@@ -19,7 +19,7 @@ export default async function LoginPage({
   if (await getSessionUser()) redirect(next);
 
   return (
-    <main className="min-h-[70vh] bg-[#fffaf4] pb-[60px]">
+    <main className="min-h-[70vh] bg-[#ffffff] pb-[60px]">
       <PageHero
         compact
         eyebrow="Akun GAICREAM"

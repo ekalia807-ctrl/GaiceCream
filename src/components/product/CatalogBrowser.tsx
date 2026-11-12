@@ -1,7 +1,7 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useDeferredValue, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/types/product";
 import { ProductCard } from "./ProductCard";
@@ -11,6 +11,8 @@ export function CatalogBrowser({ products }: { products: Product[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("Semua");
   const [detail, setDetail] = useState<Product | null>(null);
+  // pengetikan tetap lancar walau daftar produk banyak
+  const deferredQuery = useDeferredValue(query);
 
   const categories = useMemo(
     () => ["Semua", ...Array.from(new Set(products.map((p) => p.category)))],
@@ -18,32 +20,32 @@ export function CatalogBrowser({ products }: { products: Product[] }) {
   );
 
   const filtered = useMemo(() => {
-    const keyword = query.trim().toLowerCase();
+    const keyword = deferredQuery.trim().toLowerCase();
     return products.filter(
       (product) =>
         (category === "Semua" || product.category === category) &&
         product.name.toLowerCase().includes(keyword),
     );
-  }, [products, query, category]);
+  }, [products, deferredQuery, category]);
 
   const closeDetail = useCallback(() => setDetail(null), []);
 
   return (
     <>
-      <div className="flex items-center justify-between border-b border-[#f0dfd4] bg-white px-[max(6vw,70px)] py-[25px] max-[800px]:flex-col max-[800px]:items-stretch max-[800px]:gap-[12px] max-[800px]:px-[20px] max-[800px]:py-[18px]">
-        <label className="flex w-[310px] items-center gap-[10px] rounded-full border border-[#ead9cf] px-[17px] py-[11px] focus-within:border-strawberry-dark max-[800px]:w-full">
-          <Search size={20} strokeWidth={1.8} aria-hidden="true" />
+      <div className="flex items-center justify-between gap-[16px] border-b border-line bg-white px-[max(6vw,20px)] py-[14px] max-[800px]:flex-col max-[800px]:items-stretch max-[800px]:gap-[4px]">
+        <label className="flex min-h-[44px] w-[300px] items-center gap-[10px] border-b border-[#d6d3d1] focus-within:border-chocolate max-[800px]:w-full">
+          <Search size={18} strokeWidth={1.5} aria-hidden="true" className="text-muted" />
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Cari rasa..."
             aria-label="Cari rasa"
-            className="w-full border-0 bg-transparent text-[13px] text-chocolate outline-none"
+            className="w-full border-0 bg-transparent text-[14px] text-chocolate outline-none"
           />
         </label>
 
-        <div className="flex gap-[7px] max-[800px]:overflow-auto">
+        <div className="flex gap-[4px] overflow-x-auto max-[800px]:-mx-[8px] max-[800px]:px-[8px]">
           {categories.map((item) => (
             <button
               key={item}
@@ -51,10 +53,10 @@ export function CatalogBrowser({ products }: { products: Product[] }) {
               onClick={() => setCategory(item)}
               aria-pressed={category === item}
               className={cn(
-                "whitespace-nowrap rounded-full border px-[16px] py-[10px] text-[12px]",
+                "min-h-[44px] whitespace-nowrap border-b px-[12px] text-[11px] uppercase tracking-[.14em]",
                 category === item
-                  ? "border-chocolate bg-chocolate text-white"
-                  : "border-[#ead9cf] bg-white text-muted",
+                  ? "border-chocolate text-chocolate"
+                  : "border-transparent text-muted hover:text-chocolate",
               )}
             >
               {item}
@@ -63,24 +65,20 @@ export function CatalogBrowser({ products }: { products: Product[] }) {
         </div>
       </div>
 
-      <section className="px-[max(6vw,70px)] pb-[100px] pt-[40px] max-[800px]:px-[20px] max-[800px]:pb-[80px] max-[800px]:pt-[30px]">
-        <div className="mb-[22px] flex justify-between">
-          <b>{filtered.length} rasa ditemukan</b>
-          <span className="text-[12px] text-muted">Dibuat fresh setiap hari</span>
+      <section className="px-[max(6vw,20px)] pb-[90px] pt-[28px]">
+        <div className="mb-[22px] flex justify-between text-[12px] text-muted">
+          <span>{filtered.length} rasa ditemukan</span>
+          <span>Dibuat fresh setiap hari</span>
         </div>
 
         {filtered.length > 0 ? (
-          <div className="grid grid-cols-3 gap-[24px] max-[1050px]:gap-[15px] max-[800px]:grid-cols-2 max-[520px]:grid-cols-1">
+          <div className="grid grid-cols-2 gap-x-[12px] gap-y-[30px] min-[801px]:grid-cols-3 min-[801px]:gap-x-[24px] min-[801px]:gap-y-[44px]">
             {filtered.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onDetail={() => setDetail(product)}
-              />
+              <ProductCard key={product.id} product={product} onDetail={() => setDetail(product)} />
             ))}
           </div>
         ) : (
-          <p className="py-[60px] text-center text-muted">
+          <p className="py-[60px] text-center text-[14px] text-muted">
             Rasa yang kamu cari belum ada. Coba kata kunci atau kategori lain.
           </p>
         )}

@@ -5,13 +5,15 @@ import { cn } from "@/lib/utils";
 
 export function Brand({
   compactOnMobile = false,
+  showTagline = false,
   className,
   onClick,
   href = "/",
 }: {
   href?: string;
-  /** true di header: logo mengecil dan teks disembunyikan di layar <= 800px */
+  /** true di header: teks nama disembunyikan di layar sangat kecil */
   compactOnMobile?: boolean;
+  showTagline?: boolean;
   className?: string;
   onClick?: () => void;
 }) {
@@ -25,21 +27,20 @@ export function Brand({
       <Image
         src="/images/logo.jpeg"
         alt={`Logo ${siteConfig.name}`}
-        width={48}
-        height={48}
+        width={72}
+        height={72}
         priority
-        className={cn(
-          "h-[48px] w-[48px] rounded-full border-2 border-[#c52931] object-cover",
-          compactOnMobile && "max-[800px]:h-[42px] max-[800px]:w-[42px]",
-        )}
+        className="h-[34px] w-[34px] rounded-full object-cover"
       />
-      <span className={cn("flex flex-col", compactOnMobile && "max-[800px]:hidden")}>
-        <b className="font-heading text-[19px] font-bold leading-none tracking-[.6px]">
+      <span className={cn("flex flex-col", compactOnMobile && "max-[380px]:hidden")}>
+        <b className="text-[15px] font-medium uppercase leading-none tracking-[.22em]">
           {siteConfig.name}
         </b>
-        <small className="mt-[5px] text-[9px] tracking-[.5px] text-biscuit">
-          {siteConfig.tagline}
-        </small>
+        {showTagline && (
+          <small className="mt-[5px] text-[10px] tracking-[.12em] text-muted">
+            {siteConfig.tagline}
+          </small>
+        )}
       </span>
     </Link>
   );

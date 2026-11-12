@@ -1,4 +1,6 @@
-import { createClient } from "@/lib/supabase/server";
+import { unstable_cache } from "next/cache";
+import { createPublicClient } from "@/lib/supabase/public";
+import { PUBLIC_DATA_TAG } from "./tags";
 
 export type OpenPo = {
   id: string;
@@ -12,9 +14,14 @@ export type OpenPo = {
   note: string;
 };
 
-/** PO yang sedang dibuka, atau null jika PO ditutup. */
-export async function getOpenPo(): Promise<OpenPo | null> {
-  const supabase = await createClient();
+/** PO yang sedang dibuka, atau null jika PO ditutup. Di-cache 30 detik. */
+export const getOpenPo = unstable_cache(loadOpenPo, ["public-open-po"], {
+  revalidate: 30,
+  tags: [PUBLIC_DATA_TAG],
+});
+
+async function loadOpenPo(): Promise<OpenPo | null> {
+  const supabase = createPublicClient();
   const { data, error } = await supabase.rpc("get_open_po");
   if (error) throw new Error(`Gagal memuat info PO: ${error.message}`);
 

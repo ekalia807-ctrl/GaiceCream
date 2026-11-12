@@ -54,3 +54,14 @@ Website memakai Supabase untuk database, login, dan penyimpanan gambar. **Ikuti 
 - `src/lib/supabase/`: klien browser/server, middleware sesi, koleksi data admin, upload gambar.
 - `src/middleware.ts`: `/pesan` dan `/riwayat` wajib login; `/admin` wajib login dan berperan admin.
 - Dashboard admin: `/admin` (ringkasan, produk, pesanan, periode PO, pelanggan, laporan, pemasukan & pengeluaran, pengaturan).
+
+## Tampilan minimalis, kecepatan, dan notifikasi (update)
+
+- **Tampilan**: warna dan font diatur di `src/app/globals.css` (token warna + satu font Jost). Mengubah token di sana otomatis mengubah seluruh website, termasuk dashboard admin.
+- **Kecepatan**:
+  - Halaman publik (Home, Katalog, Tentang) disajikan dari cache dan disegarkan tiap 60 detik, atau langsung saat admin mengubah produk/stok/PO/pengaturan (`src/app/actions/revalidate.ts`).
+  - Data publik dibaca lewat `src/lib/supabase/public.ts` (tanpa cookie) dan di-cache di `src/lib/data/`.
+  - Middleware hanya berjalan di `/pesan`, `/riwayat`, `/admin`.
+  - Info akun di header dibaca di browser (`src/hooks/useAccount.ts`).
+  - Admin: ubah status pesanan langsung terlihat (optimistic), tanpa memuat ulang semua pesanan.
+- **Notifikasi**: tabel + trigger di `supabase/migrations/0002_notifications.sql`; tampilan di `src/components/notifications/NotificationBell.tsx`; data realtime di `src/hooks/useNotifications.ts`.

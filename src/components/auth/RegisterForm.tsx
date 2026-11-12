@@ -58,7 +58,7 @@ export function RegisterForm({ next }: { next: string }) {
     return (
       <div className="text-center">
         <p className="text-[13px] leading-[1.7] text-muted">{notice}</p>
-        <Link href={`/masuk?next=${encodeURIComponent(next)}`} className="mt-[18px] inline-block font-bold text-biscuit">
+        <Link href={`/masuk?next=${encodeURIComponent(next)}`} className="mt-[18px] inline-block font-medium text-chocolate underline">
           Ke halaman masuk
         </Link>
       </div>
@@ -136,7 +136,7 @@ export function RegisterForm({ next }: { next: string }) {
       </Button>
       <p className="mt-[18px] text-center text-[12px] text-muted">
         Sudah punya akun?{" "}
-        <Link href={`/masuk?next=${encodeURIComponent(next)}`} className="font-bold text-biscuit">
+        <Link href={`/masuk?next=${encodeURIComponent(next)}`} className="font-medium text-chocolate underline">
           Masuk
         </Link>
       </p>
